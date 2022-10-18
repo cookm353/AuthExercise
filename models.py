@@ -23,11 +23,11 @@ class User(db.Model):
     @classmethod    
     def register(cls, formData):
         """Create a new user based on form data"""
-        username = formData.username.data
-        password = formData.password.data
-        email = formData.email.data
-        first_name = formData.first_name.data
-        last_name = formData.last_name.data
+        username = formData['username']
+        password = formData['password']
+        email = formData['email']
+        first_name = formData['first_name']
+        last_name = formData['last_name']
         
         hashed_pwd = bcrypt.generate_password_hash(password)
         
@@ -38,8 +38,8 @@ class User(db.Model):
         
     @classmethod
     def authenticate(cls, formData):
-        username = formData.username
-        pwd = formData.password
+        username = formData['username']
+        pwd = formData['password']
         
         user = User.query.filter_by(username=username).first()
         
