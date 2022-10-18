@@ -3,7 +3,8 @@
 {% block title %}{{user.username}}{% endblock %}
 
 {% block content %}
-<div class="container col-6">
+<div id="userInfo" class="container col-6">
+    <h1>User Info</h1>
     <ul>
         <li>Username: {{user.username}}</li>
         <li>Email: {{user.email}}</li>
@@ -11,4 +12,20 @@
         <li>Last name: {{user.last_name}}</li>
     </ul>
 </div>
+
+<div id="feedbackDiv" class="container col-6">
+    {% for item in user.feedback %}
+        {% if item %}
+            <div>
+                <h3>{{item.title}}</h3>
+                <p>{{item.content}}</p>
+                <button class="btn btn-success btn-sm" formmethod="get" formaction="/users/{{user.username}}/feedback/update">Edit</button>
+            </div><br>
+        {% endif %}
+    {% endfor %}
+    <button formaction="/users/{{user.username}}/feedback/add"
+    formmethod="GET" class="btn btn-primary">Add Feedback</button>
+</div>
+
+
 {% endblock %}
