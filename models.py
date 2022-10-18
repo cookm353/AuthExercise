@@ -48,10 +48,6 @@ class User(db.Model):
         else:
             return False
         
-    def hash_password(pwd):
-        hashed_passwd = bcrypt.generate_password_hash(pwd)
-        return hashed_passwd.decode('utf-8')
-        
     def add_user(user):
         db.session.add(user)
         db.session.commit()
