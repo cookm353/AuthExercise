@@ -23,8 +23,9 @@
             </div><br>
         {% endif %}
     {% endfor %}
-    <button formaction="/users/{{user.username}}/feedback/add"
-    formmethod="GET" class="btn btn-primary">Add Feedback</button>
+    <form action="/users/{{user.username}}/feedback/add" method="GET">
+        <button class="btn btn-primary">Add Feedback</button>
+    </form>
 </div>
 
 
