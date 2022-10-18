@@ -1,0 +1,12 @@
+{% extends 'form.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block formAction %}/Login{% endblock %}
+
+{% block formBttns %}
+<button class="btn btn-primary"
+    formaction="/login">Submit</button>
+<button class='btn btn-secondary' formmethod="GET"
+    formaction="/">Cancel</button>
+{% endblock %}
