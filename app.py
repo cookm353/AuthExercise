@@ -16,7 +16,10 @@ connect_db(app)
 
 @app.route('/')
 def index():
-    return redirect('/register')
+    if session.get('username'):
+        redirect('/secret')
+    else:
+        return redirect('/register')
 
 @app.route('/register', methods=['GET', 'POST'])
 def show_register_form():
@@ -44,12 +47,16 @@ def login():
             return redirect('/secret')
         else:
             form.username.errors = ['Invalid username or password']
+            return redirect('/login')
     else:
         return render_template('login.html', form=form)
     
 @app.route('/secret')
 def show_secret():
-    return '<h1>You made it!</h1>'
+    if session.get('username'):
+        return '<h1>You made it!</h1>'
+    else:
+        return redirect('/')
 
 @app.route('/logout')
 def logout():
