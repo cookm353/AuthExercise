@@ -13,7 +13,7 @@
 - Make a User model for SQLAlchemy:
   - [x] username - unique PK, no longer than 20 characters
   - [x] password - non-nullable text column
-  - [x] email - non-nullable unique column no long that 50 characters
+  - [x] email - non-nullable unique column no longer that 50 characters
   - [x] first_name - non-nullable column no longer than 30 characters
   - [x] last_name - non-nullable column no longer than 30 characters
 
