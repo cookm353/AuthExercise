@@ -3,19 +3,19 @@
 ## Step 0: Set Up Environment
 
 - [x] Make a venv
-- [ ] Install packages
-- [ ] Create a repo and post it to GitHub
+- [x] Install packages
+- [x] Create a repo and post it to GitHub
 - [x] Make a .gitignore
-- [ ] Update requirements.txt
+- [x] Update requirements.txt
 
 ## Step 1: Create User Model
 
 - Make a User model for SQLAlchemy:
-  - [ ] username - unique PK, no longer than 20 characters
-  - [ ] password - non-nullable text column
-  - [ ] email - non-nullable unique column no long that 50 characters
-  - [ ] first_name - non-nullable column no longer than 30 characters
-  - [ ] last_name - non-nullable column no longer than 30 characters
+  - [x] username - unique PK, no longer than 20 characters
+  - [x] password - non-nullable text column
+  - [x] email - non-nullable unique column no long that 50 characters
+  - [x] first_name - non-nullable column no longer than 30 characters
+  - [x] last_name - non-nullable column no longer than 30 characters
 
 ## Step 2: Make a Base Template
 
@@ -24,20 +24,20 @@
 
 ## Step 3: Make Routes
 
-- [ ] **GET /**
-  - [ ] Redirect to /register
+- [x] **GET /**
+  - [x] Redirect to /register
 - [ ] **GET /register**
-  - [ ] Show a form that, when submitted, will register a user
-  - [ ] Should accept a username, password, email, first name, and last name
-  - [ ] Use WTForms
+  - [x] Show a form that, when submitted, will register a user
+  - [x] Should accept a username, password, email, first name, and last name
+  - [x] Use WTForms
   - [ ] Password input should hide characters
-- [ ] **POST /register**
-  - [ ] Process registration form by adding user
-  - [ ] Redirect to /secret
+- [x] **POST /register**
+  - [x] Process registration form by adding user
+  - [x] Redirect to /secret
 - [ ] **GET /login**
-  - [ ] Show a login form
-  - [ ] Should accept a username and password
-  - [ ] Be sure to use WTForms and hide password input
+  - [x] Show a login form
+  - [x] Should accept a username and password
+  - [x] Be sure to use WTForms and hide password input
 - [ ] **POST /login**
   - [ ] Process login form, making sure user is authenticated and going to /secret if they are
 - [ ] **GET /secret**
