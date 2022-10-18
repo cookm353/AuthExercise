@@ -24,4 +24,5 @@ class LoginForm(FlaskForm):
     
 class FeedbackForm(FlaskForm):
     """Form for leaving feedback"""
-    ...
+    title = StringField('Title', validators=[InputRequired(message='Please enter a username')])
+    content = StringField('Content', validators=[InputRequired(message='Please enter a username')])
