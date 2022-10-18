@@ -30,18 +30,18 @@
   - [x] Show a form that, when submitted, will register a user
   - [x] Should accept a username, password, email, first name, and last name
   - [x] Use WTForms
-  - [ ] Password input should hide characters
+  - [x] Password input should hide characters
 - [x] **POST /register**
   - [x] Process registration form by adding user
   - [x] Redirect to /secret
-- [ ] **GET /login**
+- [x] **GET /login**
   - [x] Show a login form
   - [x] Should accept a username and password
   - [x] Be sure to use WTForms and hide password input
-- [ ] **POST /login**
-  - [ ] Process login form, making sure user is authenticated and going to /secret if they are
-- [ ] **GET /secret**
-  - [ ] Return text 'You made it!' (to be changed)
+- [x] **POST /login**
+  - [x] Process login form, making sure user is authenticated and going to /secret if they are
+- [x] **GET /secret**
+  - [x] Return text 'You made it!' (to be changed)
 
 ## Step 4: Restrict Access to /secret
 
