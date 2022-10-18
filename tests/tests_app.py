@@ -106,3 +106,16 @@ class TestApp(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Register', html)
             self.assertNotIn('Lebowski', html)
+            
+    def test_deleting_user(self):
+        with app.test_client() as client:
+            data = {'username': 'TheDude'}
+            delete_resp = client.post('/users/TheDude/delete', data=data, follow_redirects=True)
+            html = delete_resp.get_data(as_text=True)
+            
+            self.assertEqual(delete_resp.status_code, 200)
+            self.assertIn('Register', html)
+            self.assertIn('Login', html)
+            
+            user_info_resp = client.get('/users/TheDude')
+            self.assertEqual(user_info_resp.status_code, 302)
