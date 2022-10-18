@@ -79,18 +79,28 @@ class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.Text, nullable=False)    
     content = db.Column(db.Text, nullable=False)
-    username = db.Column(db.Text, db.ForeignKey('users.username'))
+    username = db.Column(db.Text, db.ForeignKey('users.username', 
+                                                ondelete='CASCADE', 
+                                                onupdate='CASCADE'))
     
     user = db.relationship('User', backref='feedback')
     
     def __repr__(self):
         return f"<Feedback title={self.title} content={self.content} username={self.username}>"
     
+    @staticmethod
     def add_feedback():
         ...
     
+    @staticmethod
     def get_feedback(id):
         return Feedback.query.get_or_404(id)
     
-    def delete_feedback(id):
+    @staticmethod
+    def edit_feedback(id, formData):
         ...
+    
+    @staticmethod
+    def delete_feedback(id):
+        Feedback.query.filter_by(id=id).delete()
+        db.session.commit()
