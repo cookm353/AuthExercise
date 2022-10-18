@@ -1,0 +1,12 @@
+{% extends 'form.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block formAction %}/register{% endblock %}
+
+{% block formBttns %}
+<button class="btn btn-primary" 
+    formaction="/register">Submit</button>
+<button class='btn btn-secondary' formmethod="GET"
+    formaction="/">Cancel</button>
+{% endblock %}
