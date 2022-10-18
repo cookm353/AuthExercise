@@ -20,3 +20,14 @@ mario = User(username='ItsAMe', password=User.hash_password('AMario!'), email='M
 
 db.session.add_all([jsnow, dumbledore, mario])
 db.session.commit()
+
+Feedback.query.delete()
+
+watch = Feedback(title='My Watch Has Ended', content='Suck it, Olly', 
+                 username='AzorAhai')
+itsme = Feedback(title="It's a Me!", content='Mario!', username='ItsAMe')
+socks = Feedback(title='Wardrobe Tips', content='One can never have enough socks',
+                 username='BeardedOne')
+
+db.session.add_all([watch, itsme, socks])
+db.session.commit()
