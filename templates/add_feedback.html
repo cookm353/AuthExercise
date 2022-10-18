@@ -1,0 +1,12 @@
+{% extends 'form.html' %}
+
+{% block title %}Add Feedback{% endblock %}
+
+{% block formAction %}/user/{{user.username}}/feedback/add{% endblock %}
+
+{% block formBttns %}
+<br>
+<button class="btn btn-primary" formaction="users/{{user.username}}/feedback/add">
+    Submit
+</button>
+{% endblock %}
