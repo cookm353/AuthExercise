@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container col-6">
+    <form action="{% block formAction %}{% endblock %}" method="POST">
+        {{ form.hidden_tag() }}
+        {% block formFields %}{% endblock %}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="form-group">
+                {{ field.label }}
+                {{ field(class_='form-control') }}
+                {% for err in field.errors %}
+                <p class="text-danger small">{{ err }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        {% block formBttns %}{% endblock %}
+    </form>
+</div>
+{% endblock %}
