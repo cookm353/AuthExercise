@@ -48,19 +48,29 @@ class User(db.Model):
         else:
             return False
         
+    @staticmethod
+    def hash_password(password):
+        """Helper method for seed"""
+        return bcrypt.generate_password_hash(password).decode('utf-8')
+        
+    @staticmethod
     def add_user(user):
         db.session.add(user)
         db.session.commit()
         
+    @staticmethod
     def get_user(username):
         """Retrieve a user"""
         return User.query.get_or_404(username)
     
+    @staticmethod
     def get_all_users():
         return User.query.all()
-            
-    def delete_user():
-        ...
+    
+    @staticmethod
+    def delete_user(username):
+        User.query.filter_by(username=username).delete()
+        db.session.commit()
         
 
 class Feedback(db.Model):
@@ -69,9 +79,12 @@ class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.Text, nullable=False)    
     content = db.Column(db.Text, nullable=False)
+    username = db.Column(db.Text, db.ForeignKey('users.username'))
+    
+    user = db.relationship('User', backref='feedback')
     
     def __repr__(self):
-        return f"<Feedback title={self.title} content={self.content}>"
+        return f"<Feedback title={self.title} content={self.content} username={self.username}>"
     
     def add_feedback():
         ...
