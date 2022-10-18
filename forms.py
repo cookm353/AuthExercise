@@ -1,5 +1,3 @@
-from ast import Pass
-from tokenize import String
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.widgets import PasswordInput
