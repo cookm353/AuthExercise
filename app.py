@@ -17,7 +17,7 @@ connect_db(app)
 @app.route('/')
 def index():
     if session.get('username'):
-        return redirect('/secret')
+        return redirect(f'/users/{session["username"]}')
     else:
         return render_template('index.html')
 
@@ -42,11 +42,11 @@ def show_register_form():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Handle displaying login form and processing it"""
     form = LoginForm()
     
     if form.validate_on_submit():
         formData = {'username': form.username.data, 'password': form.password.data}
-        
         user = User.authenticate(formData)
         
         if user:
@@ -54,7 +54,7 @@ def login():
             return redirect(f'/users/{user.username}')
         else:
             form.username.errors = ['Invalid username or password']
-            return redirect('/login')
+            # return redirect('/login')
     else:
         return render_template('login.html', form=form)
     
@@ -77,3 +77,28 @@ def show_user_info(username):
         return render_template('user_info.html', user=user)
     else:
         return redirect('/')
+
+@app.route('/users/<username>/delete', methods=['POST'])
+def delete_user(username):
+    # Delete user if they're logged in and redirect to home
+    if session.get('username') == username:
+        User.delete_user(username)
+        session.pop('username')
+
+    return redirect('/')
+    
+    
+@app.route('/users/<username>/feedback/add', methods=['GET', 'POST'])
+def add_feedback(feedback_id):
+    if session.get('username'):
+        ...
+    else:
+        return redirect('/')
+    
+# @app.route('/users/<feedback-id>/update', methods=['GET', 'POST'])
+# def update_feedback(feedback_id):
+#     ...
+    
+# @app.route('/users/<feedback-id>/delete', methods=['GET', 'POST'])
+# def delete_feedback(feedback_id):
+#     ...
