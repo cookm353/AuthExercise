@@ -17,9 +17,9 @@ connect_db(app)
 @app.route('/')
 def index():
     if session.get('username'):
-        redirect('/secret')
+        return redirect('/secret')
     else:
-        return redirect('/register')
+        return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def show_register_form():
@@ -60,8 +60,8 @@ def show_secret():
 
 @app.route('/logout')
 def logout():
-    # session.pop(username)
-    ...
+    session.pop('username')
+    return redirect('/')
     
 @app.route('/users/<username>')
 def show_user_info(username):
