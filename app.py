@@ -25,8 +25,13 @@ def index():
 def show_register_form():
     form = RegistrationForm()
     
-    if form.validate_on_submit():
-        new_user = User.register(form)
+    if form.validate_on_submit():        
+        formData = {
+            'username': form.username.data, 'password': form.password.data,
+            'email': form.email.data, 'first_name': form.first_name.data,
+            'last_name': form.last_name.data}
+        
+        new_user = User.register(formData)
         User.add_user(new_user)
         
         session['username'] = new_user.username
@@ -40,7 +45,9 @@ def login():
     form = LoginForm()
     
     if form.validate_on_submit():
-        user = User.authenticate(form)
+        formData = {'username': form.username.data, 'password': form.password.data}
+        
+        user = User.authenticate(formData)
         
         if user:
             session['username'] = user.username

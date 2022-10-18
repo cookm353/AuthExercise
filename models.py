@@ -21,13 +21,13 @@ class User(db.Model):
         return f"<User username={self.username} email={self.email} first_name={self.first_name} last_name={self.last_name}>"
 
     @classmethod    
-    def register(cls, form):
+    def register(cls, formData):
         """Create a new user based on form data"""
-        username = form.username.data
-        password = form.password.data
-        email = form.email.data
-        first_name = form.first_name.data
-        last_name = form.last_name.data
+        username = formData.username.data
+        password = formData.password.data
+        email = formData.email.data
+        first_name = formData.first_name.data
+        last_name = formData.last_name.data
         
         hashed_pwd = bcrypt.generate_password_hash(password)
         
@@ -37,9 +37,9 @@ class User(db.Model):
                    first_name=first_name, last_name=last_name)
         
     @classmethod
-    def authenticate(cls, form):
-        username = form.username.data
-        pwd = form.password.data
+    def authenticate(cls, formData):
+        username = formData.username
+        pwd = formData.password
         
         user = User.query.filter_by(username=username).first()
         
