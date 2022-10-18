@@ -1,7 +1,6 @@
 from unittest import TestCase
 from app import app
 from models import User, db
-from flask import session
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///flask_auth_test'
 app.config['SQLALCHEMY_ECHO'] = False
