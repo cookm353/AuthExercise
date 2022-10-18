@@ -31,7 +31,7 @@ def show_register_form():
         
         session['username'] = new_user.username
         
-        return redirect('/secret')
+        return redirect(f'/users/{new_user.username}')
     else:
         return render_template('register.html', form=form)
 
@@ -43,20 +43,20 @@ def login():
         user = User.authenticate(form)
         
         if user:
-            session['username'] = user.username       
-            return redirect('/secret')
+            session['username'] = user.username
+            return redirect(f'/users/{user.username}')
         else:
             form.username.errors = ['Invalid username or password']
             return redirect('/login')
     else:
         return render_template('login.html', form=form)
     
-@app.route('/secret')
-def show_secret():
-    if session.get('username'):
-        return '<h1>You made it!</h1>'
-    else:
-        return redirect('/')
+# @app.route('/secret')
+# def show_secret():
+#     if session.get('username'):
+#         return '<h1>You made it!</h1>'
+#     else:
+#         return redirect('/')
 
 @app.route('/logout')
 def logout():
@@ -65,4 +65,8 @@ def logout():
     
 @app.route('/users/<username>')
 def show_user_info(username):
-    ...
+    if session.get('username'):
+        user = User.get_user(username)
+        return render_template('user_info.html', user=user)
+    else:
+        return redirect('/')
