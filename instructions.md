@@ -45,9 +45,9 @@
 
 ## Step 4: Restrict Access to /secret
 
-- [ ] Protect route for /secret and make sure only logged in users can access it
-- [ ] Whenever a user logs in after having registered, store info in session
-- [ ] After user successfully logs in or registers, store their username in session
+- [x] Protect route for /secret and make sure only logged in users can access it
+- [x] Whenever a user logs in after having registered, store info in session
+- [x] After user successfully logs in or registers, store their username in session
 
 ## Step 5: Log Out Users
 
@@ -57,9 +57,9 @@
 ## Step 6: Change /secret to /users/<user_name>
 
 - After user logs in take them to...
-- [ ] **GET /users/<user_name>**
-  - [ ] Display a template that shows info about the user (everything but the password)
-  - [ ] Only logged in users should be able to access this page!
+- [x] **GET /users/<user_name>**
+  - [x] Display a template that shows info about the user (everything but the password)
+  - [x] Only logged in users should be able to access this page!
 
 ## Step 7: Give Some Feedback
 
