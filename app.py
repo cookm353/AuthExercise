@@ -54,16 +54,17 @@ def login():
             return redirect(f'/users/{user.username}')
         else:
             form.username.errors = ['Invalid username or password']
-            # return redirect('/login')
+            return redirect('/login')
     else:
         return render_template('login.html', form=form)
-    
-# @app.route('/secret')
-# def show_secret():
-#     if session.get('username'):
-#         return '<h1>You made it!</h1>'
-#     else:
-#         return redirect('/')
+
+# No longer needed
+"""@app.route('/secret')
+def show_secret():
+    if session.get('username'):
+        return '<h1>You made it!</h1>'
+    else:
+        return redirect('/')"""
 
 @app.route('/logout')
 def logout():
@@ -87,6 +88,7 @@ def delete_user(username):
 
     return redirect('/')
     
+"""Feedback routes"""
     
 @app.route('/users/<username>/feedback/add', methods=['GET', 'POST'])
 def add_feedback(username):
@@ -125,6 +127,7 @@ def delete_feedback(feedback_id):
     feedback = Feedback.get(feedback_id)
     
     if session.get('username') and feedback.username == session.get('username'):
+        # raise
         Feedback.delete(feedback_id)
         return redirect('/users/')
     else:

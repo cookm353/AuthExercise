@@ -114,3 +114,9 @@
 - Static methods are your friend
 - Keep using different branches!
 - Learn how to arrange elements in Bootstrap (including navbar)
+- Create separate folders in templates for each template subtype
+
+```python
+...
+  return render_template('/users/login.html')
+```

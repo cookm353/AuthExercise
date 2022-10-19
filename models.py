@@ -116,7 +116,7 @@ class Feedback(db.Model):
         db.session.add(feedback)
         db.session.commit()
     
-    # @staticmethod
+    @staticmethod
     def delete(id):
         Feedback.query.filter_by(id=id).delete()
         db.session.commit()
