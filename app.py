@@ -32,7 +32,7 @@ def show_register_form():
             'last_name': form.last_name.data}
         
         new_user = User.register(formData)
-        User.add_user(new_user)
+        User.add(new_user)
         
         session['username'] = new_user.username
         
@@ -73,7 +73,7 @@ def logout():
 @app.route('/users/<username>')
 def show_user_info(username):
     if session.get('username'):
-        user = User.get_user(username)
+        user = User.get(username)
         return render_template('user_info.html', user=user)
     else:
         return redirect('/')
@@ -82,7 +82,7 @@ def show_user_info(username):
 def delete_user(username):
     # Delete user if they're logged in and redirect to home
     if session.get('username') == username:
-        User.delete_user(username)
+        User.delete(username)
         session.pop('username')
 
     return redirect('/')
@@ -96,19 +96,36 @@ def add_feedback(username):
         if form.validate_on_submit():
             formData = {'title': form.title.data, 'content': form.content.data}
             
-            Feedback.add_feedback(username, formData)
+            Feedback.add(username, formData)
             
             return redirect(f'/users/{username}')
         else:
-            user = User.get_user(username)
+            user = User.get(username)
             return render_template('add_feedback.html', user=user, form=form)
     else:
         return redirect('/')
     
-# @app.route('/users/<feedback-id>/update', methods=['GET', 'POST'])
-# def update_feedback(feedback_id):
-#     ...
+@app.route('/users/<feedback_id>/update', methods=['GET', 'POST'])
+def update_feedback(feedback_id):
+    feedback = Feedback.get(feedback_id)
+    form = FeedbackForm(obj=feedback)
     
-# @app.route('/users/<feedback-id>/delete', methods=['GET', 'POST'])
-# def delete_feedback(feedback_id):
-#     ...
+    if session.get('username') and feedback.username == session.get('username'):
+        if form.validate_on_submit():
+            formData = {'title': form.title.data, 'content': form.content.data}
+            Feedback.edit(feedback_id, formData)
+            return redirect(f'/users/{feedback.username}')
+        else:
+            return render_template('edit_feedback.html', form=form, feedback=feedback)
+    else:
+        return redirect('/')
+    
+@app.route('/users/<feedback_id>/delete', methods=['POST'])
+def delete_feedback(feedback_id):
+    feedback = Feedback.get(feedback_id)
+    
+    if session.get('username') and feedback.username == session.get('username'):
+        Feedback.delete(feedback_id)
+        return redirect('/users/')
+    else:
+        return redirect('/users/')
