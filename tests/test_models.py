@@ -20,7 +20,7 @@ class TestUser(TestCase):
             'email':'thedude@aol.com', 'first_name':'Jeff', 'last_name': 'Lebowski'}
         
         dude = User.register(dude_data)
-        User.add_user(dude)
+        User.add(dude)
         
         db.session.add(dude)
         db.session.commit()
@@ -47,13 +47,13 @@ class TestUser(TestCase):
         self.assertIsInstance(User.authenticate(dude_data), User)
         
     def test_get_user(self):
-        dude = User.get_user('TheDude')
+        dude = User.get('TheDude')
         
         self.assertIsInstance(dude, User)
         self.assertEqual(dude.username, 'TheDude')
         self.assertNotEqual(dude.password, 'Abides')
         
     def test_get_all_users(self):
-        users = User.get_all_users()
+        users = User.get_all()
         
         self.assertEqual(users[0].username, 'TheDude')
