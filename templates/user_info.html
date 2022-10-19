@@ -19,7 +19,9 @@
             <div>
                 <h3>{{item.title}}</h3>
                 <p>{{item.content}}</p>
-                <button class="btn btn-success btn-sm" formmethod="get" formaction="/users/{{user.username}}/feedback/update">Edit</button>
+                <form action="/users/{{item.id}}/update">
+                    <button class="btn btn-success btn-sm" formmethod="GET">Edit</button>
+                </form>
             </div><br>
         {% endif %}
     {% endfor %}
