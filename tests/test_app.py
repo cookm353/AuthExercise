@@ -119,3 +119,30 @@ class TestApp(TestCase):
             
             user_info_resp = client.get('/users/TheDude')
             self.assertEqual(user_info_resp.status_code, 302)
+            
+    def test_feedback_form_display(self):
+        with app.test_client() as client:
+            login_data = {'username': 'TheDude', 'password': 'Abides'}
+            login_resp = client.post('/login', data=login_data)
+            feedback_resp = client.get('/users/TheDude/feedback/add')
+            html = feedback_resp.get_data(as_text=True)
+            
+            self.assertEqual(feedback_resp.status_code, 200)
+            self.assertIn('Title', html)
+                
+    def test_adding_feedback(self):
+        with app.test_client() as client:
+            login_data = {'username': 'TheDude', 'password': 'Abides'}
+            login_resp = client.post('/login', data=login_data)
+            feedback_data = {'title': "Well that's just like your opinion",
+                             'content': 'Man', 'username': 'TheDude'}
+            feedback_resp = client.post('/users/TheDude/feedback/add', data=feedback_data, follow_redirects=True)
+            html = feedback_resp.get_data(as_text=True)
+            
+            self.assertTrue(feedback_resp.status_code, 200)
+            self.assertIn('opinion', html)
+            self.assertIn('TheDude', html)
+            
+    def test_update_feedback_form(self):
+        with app.test_client() as client:
+            ...
