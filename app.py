@@ -89,9 +89,19 @@ def delete_user(username):
     
     
 @app.route('/users/<username>/feedback/add', methods=['GET', 'POST'])
-def add_feedback(feedback_id):
+def add_feedback(username):
+    form = FeedbackForm()
+    
     if session.get('username'):
-        ...
+        if form.validate_on_submit():
+            formData = {'title': form.title.data, 'content': form.content.data}
+            
+            Feedback.add_feedback(username, formData)
+            
+            return redirect(f'/users/{username}')
+        else:
+            user = User.get_user(username)
+            return render_template('add_feedback.html', user=user, form=form)
     else:
         return redirect('/')
     

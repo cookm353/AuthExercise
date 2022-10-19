@@ -89,8 +89,13 @@ class Feedback(db.Model):
         return f"<Feedback title={self.title} content={self.content} username={self.username}>"
     
     @staticmethod
-    def add_feedback():
-        ...
+    def add_feedback(username, formData):
+        title = formData['title']
+        content = formData['content']
+        feedback = Feedback(username=username, title=title, content=content)
+        
+        db.session.add(feedback)
+        db.session.commit()
     
     @staticmethod
     def get_feedback(id):
