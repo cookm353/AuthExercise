@@ -1,13 +1,13 @@
 from flask import Flask, render_template, redirect, session, request
 from flask_debugtoolbar import DebugToolbarExtension
 from forms import RegistrationForm, LoginForm, FeedbackForm
-from models import connect_db, User, Feedback
+from models import db, connect_db, User, Feedback
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///flask_auth'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True
+# app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = 'yummy'
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
@@ -125,10 +125,13 @@ def update_feedback(feedback_id):
 @app.route('/users/<feedback_id>/delete', methods=['POST'])
 def delete_feedback(feedback_id):
     feedback = Feedback.get(feedback_id)
+    print('*********************')
+    print(session.get('username'))
+    print(feedback.username)
+    print('*********************')
     
     if session.get('username') and feedback.username == session.get('username'):
-        # raise
-        Feedback.delete(feedback_id)
-        return redirect('/users/')
-    else:
-        return redirect('/users/')
+        Feedback.query.filter_by(feedback_id).delete()
+        db.session.commit()
+        # Feedback.delete(feedback_id)
+        return redirect(f'/logout')
