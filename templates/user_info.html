@@ -20,10 +20,12 @@
                 <h3>{{item.title}}</h3>
                 <p>{{item.content}}</p>
                 <form>
-                    <button class="btn btn-success btn-sm" formaction="/users/{{item.id}}/update"
-                    formmethod="GET">Edit</button>
-                    <button class="btn btn-danger btn-sm" formaction="/users/{{item.id}}/delete"
-                    formmethod="POST">Delete</button>
+                    <button class="btn btn-success btn-sm" 
+                        formaction="/users/{{item.id}}/update"
+                        formmethod="GET">Edit</button>
+                    <button class="btn btn-danger btn-sm" 
+                        formaction="/users/{{item.id}}/delete"
+                        formmethod="POST">Delete</button>
                 </form>
             </div><br>
         {% endif %}
