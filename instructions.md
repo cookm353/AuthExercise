@@ -120,3 +120,4 @@
 ...
   return render_template('/users/login.html')
 ```
+-Logout should be a POST request, not a GET
