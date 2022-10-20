@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, session, request
 from flask_debugtoolbar import DebugToolbarExtension
 from forms import RegistrationForm, LoginForm, FeedbackForm
-from models import db, connect_db, User, Feedback
+from models import connect_db, User, Feedback
 
 app = Flask(__name__)
 
@@ -37,8 +37,8 @@ def show_register_form():
         session['username'] = new_user.username
         
         return redirect(f'/users/{new_user.username}')
-    else:
-        return render_template('register.html', form=form)
+    
+    return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -54,9 +54,9 @@ def login():
             return redirect(f'/users/{user.username}')
         else:
             form.username.errors = ['Invalid username or password']
-            return redirect('/login')
-    else:
-        return render_template('login.html', form=form)
+            # return redirect('/login')
+    
+    return render_template('login.html', form=form)
 
 # No longer needed
 """@app.route('/secret')
@@ -124,14 +124,11 @@ def update_feedback(feedback_id):
     
 @app.route('/users/<feedback_id>/delete', methods=['POST'])
 def delete_feedback(feedback_id):
-    feedback = Feedback.get(feedback_id)
-    print('*********************')
-    print(session.get('username'))
-    print(feedback.username)
-    print('*********************')
-    
-    if session.get('username') and feedback.username == session.get('username'):
-        Feedback.query.filter_by(feedback_id).delete()
-        db.session.commit()
-        # Feedback.delete(feedback_id)
-        return redirect(f'/logout')
+    if request.method == 'POST':
+        feedback = Feedback.get(feedback_id)
+        print('Bloop')
+        
+        if session.get('username') and feedback.username == session.get('username'):
+            Feedback.delete(feedback_id)
+            
+        return redirect('/users/')
