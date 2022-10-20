@@ -16,9 +16,10 @@ dumbledore = User(username='BeardedOne', password=User.hash_password('ShutUpLucy
                   last_name='Dumbledore')
 mario = User(username='ItsAMe', password=User.hash_password('AMario!'), email='MM@mushroomkingdom.net',
              first_name='Mario', last_name='Mario')
+dude = User(username='TheDude', password=User.hash_password('Abides'), email='thedude@aol.com', 
+            first_name='Jeff', last_name='Lebowski')
 
-
-db.session.add_all([jsnow, dumbledore, mario])
+db.session.add_all([jsnow, dumbledore, mario, dude])
 db.session.commit()
 
 Feedback.query.delete()
@@ -28,6 +29,8 @@ watch = Feedback(title='My Watch Has Ended', content='Suck it, Olly',
 itsme = Feedback(title="It's a Me!", content='Mario!', username='ItsAMe')
 socks = Feedback(title='Wardrobe Tips', content='One can never have enough socks',
                  username='BeardedOne')
+opinion = Feedback(title="Well that's just like your opinion", content='Man',
+                   username='TheDude')
 
-db.session.add_all([watch, itsme, socks])
+db.session.add_all([watch, itsme, socks, opinion])
 db.session.commit()
