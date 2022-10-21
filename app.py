@@ -122,17 +122,12 @@ def update_feedback(feedback_id):
     else:
         return redirect('/')
     
-@app.route('/feedback/<Feedback_id>/delete', methods=['POST'])
+@app.route('/feedback/<int:feedback_id>/delete', methods=['POST'])
 def delete_feedback(feedback_id):
-    feedback_id = int(feedback_id)
-    import pdb; pdb.set_trace()
-    # if request.method == 'POST':
-    # assert
-    feedback = Feedback.get(feedback_id)
+    feedback = Feedback.get(feedback_id)    
     print('Bloop')
     
     if session.get('username') and feedback.username == session.get('username'):
         Feedback.delete(feedback_id)
         
     return redirect('/')
-    # return render_template('add_feedback.html')

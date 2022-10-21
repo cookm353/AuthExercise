@@ -207,7 +207,7 @@ class TestApp(TestCase):
             login_resp = client.post('/login', data=login_data)
             self.assertEqual(login_resp.status_code, 302)
             
-            delete_resp = client.post('/users/1/delete', follow_redirects=True)
+            delete_resp = client.post('/feedback/1/delete', follow_redirects=True)
             html = delete_resp.get_data(as_text=True)
             self.assertEqual(delete_resp.status_code, 200)
             self.assertNotIn('asshole', html)
