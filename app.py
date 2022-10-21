@@ -17,48 +17,54 @@ connect_db(app)
 @app.route('/')
 def index():
     if session.get('username'):
-        return redirect(f'/users/{session["username"]}')
+        return redirect('/users')
     else:
         return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def registration_form():
     """Show the registration form and handle its submission"""
-    form = RegistrationForm()
-    
-    if form.validate_on_submit():        
-        formData = {
-            'username': form.username.data, 'password': form.password.data,
-            'email': form.email.data, 'first_name': form.first_name.data,
-            'last_name': form.last_name.data}
+    if session.get('username'):
+        return redirect('/users')
+    else:
+        form = RegistrationForm()
         
-        new_user = User.register(formData)
-        User.add(new_user)
+        if form.validate_on_submit():        
+            formData = {
+                'username': form.username.data, 'password': form.password.data,
+                'email': form.email.data, 'first_name': form.first_name.data,
+                'last_name': form.last_name.data}
+            
+            new_user = User.register(formData)
+            User.add(new_user)
+            
+            session['username'] = new_user.username
+            
+            return redirect(f'/users/{new_user.username}')
         
-        session['username'] = new_user.username
-        
-        return redirect(f'/users/{new_user.username}')
-    
-    return render_template('register.html', form=form)
+        return render_template('register.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Handle displaying login form and processing it"""
-    form = LoginForm()
-    
-    if form.validate_on_submit():
-        formData = {'username': form.username.data, 'password': form.password.data}
-        user = User.authenticate(formData)
+    if session.get('username'):
+        return redirect('/users')
+    else:
+        form = LoginForm()
         
-        if user:
-            session['username'] = user.username
-            return redirect(f'/users/{user.username}')
-        else:
-            form.username.errors = ['Invalid username or password']
-            # return redirect('/login')
-    
-    return render_template('login.html', form=form)
+        if form.validate_on_submit():
+            formData = {'username': form.username.data, 'password': form.password.data}
+            user = User.authenticate(formData)
+            
+            if user:
+                session['username'] = user.username
+                return redirect(f'/users/{user.username}')
+            else:
+                form.username.errors = ['Invalid username or password']
+                # return redirect('/login')
+        
+        return render_template('login.html', form=form)
 
 # No longer needed
 """@app.route('/secret')
