@@ -94,7 +94,7 @@
   - [x] Redirect to /users/<username>
   - [x] Only users who've written feedback should be able to update it
 - [x] **POST /users/<feedback-id>/delete**
-  - [ ] Delete specified piece of feedback
+  - [x] Delete specified piece of feedback
   - [x] Redirect to /users/<username>
   - [x] Only the user who wrote the feedback should be able to delete it
 
@@ -120,4 +120,7 @@
 ...
   return render_template('/users/login.html')
 ```
--Logout should be a POST request, not a GET
+
+- Logout should be a POST request, not a GET
+- You can reference session in any Jinja template
+- Specify the variable type in route definitions when possible, it'll save you a lot of headaches later
