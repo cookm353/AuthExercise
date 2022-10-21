@@ -14,10 +14,10 @@
 </div>
 
 <div id="feedbackDiv" class="container col-6">
+    <h2>Posts by {{user.username}}</h2>
     {% for item in user.feedback %}
         {% if item %}
             <div>
-                <h2>Posts by {{user.username}}</h2>
                 <h4>{{item.title}}</h4>
                 <p>{{item.content}}</p>
                 <form>
