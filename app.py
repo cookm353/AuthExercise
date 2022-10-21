@@ -22,7 +22,8 @@ def index():
         return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
-def show_register_form():
+def registration_form():
+    """Show the registration form and handle its submission"""
     form = RegistrationForm()
     
     if form.validate_on_submit():        
@@ -39,6 +40,7 @@ def show_register_form():
         return redirect(f'/users/{new_user.username}')
     
     return render_template('register.html', form=form)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -70,6 +72,15 @@ def show_secret():
 def logout():
     session.pop('username')
     return redirect('/')
+
+@app.route('/users')
+def show_users():
+    users = User.get_all()
+    
+    if session.get('username'):
+        return render_template('users.html', users=users)
+
+    return redirect ('/')
     
 @app.route('/users/<username>')
 def show_user_info(username):
