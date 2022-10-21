@@ -17,7 +17,8 @@ dumbledore = User(username='BeardedOne', password=User.hash_password('ShutUpLucy
 mario = User(username='ItsAMe', password=User.hash_password('AMario!'), email='MM@mushroomkingdom.net',
              first_name='Mario', last_name='Mario')
 dude = User(username='TheDude', password=User.hash_password('Abides'), email='thedude@aol.com', 
-            first_name='Jeff', last_name='Lebowski')
+            first_name='Jeff', last_name='Lebowski',
+            is_admin=True)
 
 db.session.add_all([jsnow, dumbledore, mario, dude])
 db.session.commit()

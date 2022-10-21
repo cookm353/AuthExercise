@@ -98,8 +98,10 @@ def show_user_info(username):
 
 @app.route('/users/<username>/delete', methods=['POST'])
 def delete_user(username):
+    current_user = User.get(session.get('username'))
+    
     # Delete user if they're logged in and redirect to home
-    if session.get('username') == username:
+    if session.get('username') == username or current_user.is_admin:
         User.delete(username)
         session.pop('username')
 
@@ -110,8 +112,9 @@ def delete_user(username):
 @app.route('/users/<username>/feedback/add', methods=['GET', 'POST'])
 def add_feedback(username):
     form = FeedbackForm()
+    current_user = User.get(session.get('username'))
     
-    if session.get('username'):
+    if (session.get('username') and session.get('username') == username) or current_user.is_admin:
         if form.validate_on_submit():
             formData = {'title': form.title.data, 'content': form.content.data}
             
@@ -128,8 +131,9 @@ def add_feedback(username):
 def update_feedback(feedback_id):
     feedback = Feedback.get(feedback_id)
     form = FeedbackForm(obj=feedback)
+    current_user = User.get(session.get('username'))
     
-    if session.get('username') and feedback.username == session.get('username'):
+    if (session.get('username') and feedback.username == session.get('username')) or current_user.is_admin:
         if form.validate_on_submit():
             formData = {'title': form.title.data, 'content': form.content.data}
             Feedback.edit(feedback_id, formData)
@@ -141,10 +145,10 @@ def update_feedback(feedback_id):
     
 @app.route('/feedback/<int:feedback_id>/delete', methods=['POST'])
 def delete_feedback(feedback_id):
-    feedback = Feedback.get(feedback_id)    
-    print('Bloop')
+    current_user = User.get(session.get('username'))
+    feedback = Feedback.get(feedback_id)
     
-    if session.get('username') and feedback.username == session.get('username'):
+    if (session.get('username') and feedback.username == session.get('username')) or current_user.is_admin:
         Feedback.delete(feedback_id)
         
     return redirect('/')

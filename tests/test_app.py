@@ -44,6 +44,15 @@ class TestApp(TestCase):
     def tearDown(self):
         db.session.rollback()
         
+    @staticmethod
+    def login(redirect=False):
+        with app.test_client() as client:
+            formData = {'username': 'TheDude', 'password': 'Abides'}
+            if redirect: 
+                return client.post('/login', data=formData, follow_redirects=True)
+            else:
+                return client.post('/login', data=formData)
+        
     def test_home_page_logged_out(self):
         with app.test_client() as client:
             resp = client.get('/')
@@ -99,16 +108,14 @@ class TestApp(TestCase):
             
     def test_logging_in(self):
         with app.test_client() as client:
-            formData = {'username': 'TheDude', 'password': 'Abides'}
-            resp = client.post('/login',  data=formData)
+            resp = self.login()
             html = resp.get_data(as_text=True)
             
             self.assertEqual(resp.status_code, 302)
             
     def test_log_in_redirect(self):
         with app.test_client() as client:
-            formData = {'username': 'TheDude', 'password': 'Abides'}
-            resp = client.post('/login',  data=formData, follow_redirects=True)
+            resp = self.login(redirect=True)
             html = resp.get_data(as_text=True)
             
             self.assertEqual(resp.status_code, 200)
@@ -126,8 +133,12 @@ class TestApp(TestCase):
             
     def test_deleting_user(self):
         with app.test_client() as client:
-            data = {'username': 'TheDude'}
-            delete_resp = client.post('/users/TheDude/delete', data=data, follow_redirects=True)
+            login_data = {'username': 'TheDude', 'password': 'Abides'}
+            login_resp = client.post('/login', data=login_data)
+            
+            self.assertTrue(login_resp.status_code, 200)
+            
+            delete_resp = client.post('/users/TheDude/delete', follow_redirects=True)
             html = delete_resp.get_data(as_text=True)
             
             self.assertEqual(delete_resp.status_code, 200)
@@ -166,7 +177,7 @@ class TestApp(TestCase):
             login_resp = client.post('/login', data=login_data)
             self.assertEqual(login_resp.status_code, 302)
             
-            feedback_resp = client.get('/users/1/update')
+            feedback_resp = client.get('/feedback/1/update')
             html = feedback_resp.get_data(as_text=True)
             
             self.assertEqual(feedback_resp.status_code, 200)
@@ -179,7 +190,7 @@ class TestApp(TestCase):
             login_resp = client.post('/login', data=login_data)
             self.assertEqual(login_resp.status_code, 302)
             
-            feedback_resp = client.get('/users/1/update', follow_redirects=True)
+            feedback_resp = client.get('/feedback/1/update', follow_redirects=True)
             html = feedback_resp.get_data(as_text=True)
             
             self.assertEqual(feedback_resp.status_code, 200)
@@ -194,7 +205,7 @@ class TestApp(TestCase):
             
             feedback_data = {'title': "Well that's just like your opinion",
                 'content': 'Man'}
-            feedback_resp = client.post('/users/1/update', data=feedback_data, follow_redirects=True)
+            feedback_resp = client.post('/feedback/1/update', data=feedback_data, follow_redirects=True)
             html = feedback_resp.get_data(as_text=True)
             
             self.assertEqual(feedback_resp.status_code, 200)

@@ -101,11 +101,11 @@
 ## Further Study
 
 - [x] Make sure registration and authentication logic is handled in models.py
-- [ ] Don't let users see the registration or login forms if there's already a username in session
+- [x] Don't let users see the registration or login forms if there's already a username in session
 - [x] Add a 404 page when a user or feedback can't be found
 - [ ] Add a 401 page when users aren't authenticated or not authorized
-- [ ] Add a boolean column to users table called is_admin which defaults to false
-  - [ ] If user's an admin, they should be able to add, update, or delete feedback for any user and delete users
+- [x] Add a boolean column to users table called is_admin which defaults to false
+  - [ ] If user's an admin, they should be able to add, modify, or delete feedback for any user and delete users
 - 
 
 ## Takeaways

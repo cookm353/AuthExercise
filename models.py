@@ -16,7 +16,7 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    # is_admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=False)
     
     def __repr__(self):
         return f"<User username='{self.username}' email='{self.email}' first_name='{self.first_name}' last_name='{self.last_name}'>"
