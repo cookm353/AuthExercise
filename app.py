@@ -107,7 +107,7 @@ def add_feedback(username):
     else:
         return redirect('/')
     
-@app.route('/users/<feedback_id>/update', methods=['GET', 'POST'])
+@app.route('/feedback/<feedback_id>/update', methods=['GET', 'POST'])
 def update_feedback(feedback_id):
     feedback = Feedback.get(feedback_id)
     form = FeedbackForm(obj=feedback)
@@ -122,13 +122,17 @@ def update_feedback(feedback_id):
     else:
         return redirect('/')
     
-@app.route('/users/<feedback_id>/delete', methods=['POST'])
+@app.route('/feedback/<Feedback_id>/delete', methods=['POST'])
 def delete_feedback(feedback_id):
-    if request.method == 'POST':
-        feedback = Feedback.get(feedback_id)
-        print('Bloop')
+    feedback_id = int(feedback_id)
+    import pdb; pdb.set_trace()
+    # if request.method == 'POST':
+    # assert
+    feedback = Feedback.get(feedback_id)
+    print('Bloop')
+    
+    if session.get('username') and feedback.username == session.get('username'):
+        Feedback.delete(feedback_id)
         
-        if session.get('username') and feedback.username == session.get('username'):
-            Feedback.delete(feedback_id)
-            
-        return redirect('/users/')
+    return redirect('/')
+    # return render_template('add_feedback.html')

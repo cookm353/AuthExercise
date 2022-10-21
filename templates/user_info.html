@@ -19,13 +19,13 @@
             <div>
                 <h3>{{item.title}}</h3>
                 <p>{{item.content}}</p>
-                <form>
+                <!-- <form>
                     <button class="btn btn-success btn-sm" 
                         formaction="/users/{{item.id}}/update"
                         formmethod="GET">Edit</button>
-                </form>
-                <form method="POST" action="/users/{{item.id}}/delete">
-                    <button class="btn btn-danger btn-sm">Delete</button>
+                </form> -->
+                <form method="POST" action="/feedback/{{item.id}}/delete">
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                 </form>
             </div><br>
         {% endif %}
